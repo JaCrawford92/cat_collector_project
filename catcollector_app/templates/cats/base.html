@@ -19,9 +19,24 @@
         </ul>
         <ul class="right">
           <li><a href="{% url 'about' %}">About</a></li>
-          <li><a href="{% url 'cats_create' %}">Add a Cat</a></li>
-          <li><a href="{% url 'index' %}">View All My Cats</a></li>
-        </ul>
+          {% if user.is_authenticated %}
+            <li><a href="{% url 'toys_create' %}">Add a Toy</a></li>
+            <li><a href="{% url 'toys_index' %}">View All Toys</a></li>
+            <li><a href="{% url 'cats_create' %}">Add a Cat</a></li>
+            <li><a href="{% url 'index' %}">View All My Cats</a></li>
+            <!-- <li><a href="{% url 'logout' %}">Log Out</a></li>     -->
+            <!-- Django 5.0+ requires a POST request for logout -->
+            <li>
+              <form method="POST" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <input type="submit" class="btn" value="Log Out"/>
+              </form>
+            </li>
+          {% else %}
+            <li><a href="{% url 'signup' %}">Sign UP</a></li>
+            <li><a href="{% url 'login' %}">Log In</a></li>
+          {% endif %}
+      </ul>
       </div>
     </nav>
   </header>
